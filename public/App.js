@@ -74,8 +74,9 @@ function _removeIssue() {
 
           case 4:
             data = _context3.sent;
+            window.location.reload();
 
-          case 5:
+          case 6:
           case "end":
             return _context3.stop();
         }
@@ -247,7 +248,8 @@ var IssueList = /*#__PURE__*/function (_React$Component3) {
 
     _this2 = _super3.call(this);
     _this2.state = {
-      issues: []
+      issues: [],
+      flag: 1
     };
     _this2.createIssue = _this2.createIssue.bind(_assertThisInitialized(_this2));
     return _this2;

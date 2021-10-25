@@ -21,6 +21,7 @@ async function removeIssue(issue){
     }
   }`;
   const data = await graphQLFetch(query, { issue });
+  window.location.reload();
 }
 
 function handleRemove(issue, e) {
@@ -127,7 +128,7 @@ async function graphQLFetch(query, variables = {}) {
 class IssueList extends React.Component {
   constructor() {
     super();
-    this.state = { issues: [] };
+    this.state = { issues: [], flag: 1 };
     this.createIssue = this.createIssue.bind(this);
   }
 
