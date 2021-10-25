@@ -9,7 +9,7 @@
  *   mongo mongodb://user:pwd@xxx.mlab.com:33533/issuetracker scripts/init.mongo.js
  */
 
-db.issues.remove({});
+//db.issues.remove({});
 
 const issuesDB = [
   {

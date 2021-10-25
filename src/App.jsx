@@ -13,6 +13,22 @@ class IssueFilter extends React.Component {
   }
 }
 
+async function removeIssue(issue){
+  console.log("I'm removeIssue");
+  const query = `mutation issueDelete($issue: IssueDeletes!){
+    issueDelete(issue: $issue) {
+      id
+    }
+  }`;
+  const data = await graphQLFetch(query, { issue });
+}
+
+function handleRemove(issue, e) {
+  e.preventDefault();
+  console.log("Delete:" + issue.id);
+  removeIssue(issue);
+}
+
 function IssueRow(props) {
   const issue = props.issue;
   return (
@@ -22,6 +38,7 @@ function IssueRow(props) {
       <td>{issue.name}</td>
       <td>{issue.phoneNumber}</td>
       <td>{issue.created.toDateString()}</td>
+      <td><button onClick={(e) => handleRemove(issue, e)}>Remove</button></td>
     </tr>
   );
 }
@@ -40,6 +57,7 @@ function IssueTable(props) {
           <th>Name</th>
           <th>Phone Number</th>
           <th>Created</th>
+          <th>Remove</th>
         </tr>
       </thead>
       <tbody>

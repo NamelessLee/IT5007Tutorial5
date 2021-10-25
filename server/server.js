@@ -43,6 +43,7 @@ const resolvers = {
   Mutation: {
     setAboutMessage,
     issueAdd,
+    issueDelete,
   },
   GraphQLDate,
 };
@@ -81,7 +82,17 @@ function issueValidate(issue) {
   }
 }
 
+async function issueDelete(_, { issue }) {
+  let id = issue.id;
+  console.log("I'm issueDelete");
+  const savedIssue = await db.collection('issues')
+    .findOne({ id: id});
+  const result = await db.collection('issues').deleteOne(issue);
+  return savedIssue;
+}
+
 async function issueAdd(_, { issue }) {
+  console.log("I'm issueAdd");
   issueValidate(issue);
   issue.created = new Date();
   issue.id = await getNextSequence('issues');

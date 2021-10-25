@@ -54,9 +54,50 @@ var IssueFilter = /*#__PURE__*/function (_React$Component) {
   return IssueFilter;
 }(React.Component);
 
+function removeIssue(_x) {
+  return _removeIssue.apply(this, arguments);
+}
+
+function _removeIssue() {
+  _removeIssue = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(issue) {
+    var query, data;
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            console.log("I'm removeIssue");
+            query = "mutation issueDelete($issue: IssueDeletes!){\n    issueDelete(issue: $issue) {\n      id\n    }\n  }";
+            _context3.next = 4;
+            return graphQLFetch(query, {
+              issue: issue
+            });
+
+          case 4:
+            data = _context3.sent;
+
+          case 5:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3);
+  }));
+  return _removeIssue.apply(this, arguments);
+}
+
+function handleRemove(issue, e) {
+  e.preventDefault();
+  console.log("Delete:" + issue.id);
+  removeIssue(issue);
+}
+
 function IssueRow(props) {
   var issue = props.issue;
-  return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, issue.id), /*#__PURE__*/React.createElement("td", null, issue.serialNumber), /*#__PURE__*/React.createElement("td", null, issue.name), /*#__PURE__*/React.createElement("td", null, issue.phoneNumber), /*#__PURE__*/React.createElement("td", null, issue.created.toDateString()));
+  return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, issue.id), /*#__PURE__*/React.createElement("td", null, issue.serialNumber), /*#__PURE__*/React.createElement("td", null, issue.name), /*#__PURE__*/React.createElement("td", null, issue.phoneNumber), /*#__PURE__*/React.createElement("td", null, issue.created.toDateString()), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick(e) {
+      return handleRemove(issue, e);
+    }
+  }, "Remove")));
 }
 
 function IssueTable(props) {
@@ -68,7 +109,7 @@ function IssueTable(props) {
   });
   return /*#__PURE__*/React.createElement("table", {
     className: "bordered-table"
-  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "ID"), /*#__PURE__*/React.createElement("th", null, "Serial Number"), /*#__PURE__*/React.createElement("th", null, "Name"), /*#__PURE__*/React.createElement("th", null, "Phone Number"), /*#__PURE__*/React.createElement("th", null, "Created"))), /*#__PURE__*/React.createElement("tbody", null, issueRows));
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "ID"), /*#__PURE__*/React.createElement("th", null, "Serial Number"), /*#__PURE__*/React.createElement("th", null, "Name"), /*#__PURE__*/React.createElement("th", null, "Phone Number"), /*#__PURE__*/React.createElement("th", null, "Created"), /*#__PURE__*/React.createElement("th", null, "Remove"))), /*#__PURE__*/React.createElement("tbody", null, issueRows));
 }
 
 var IssueAdd = /*#__PURE__*/function (_React$Component2) {
@@ -126,26 +167,26 @@ var IssueAdd = /*#__PURE__*/function (_React$Component2) {
   return IssueAdd;
 }(React.Component);
 
-function graphQLFetch(_x) {
+function graphQLFetch(_x2) {
   return _graphQLFetch.apply(this, arguments);
 }
 
 function _graphQLFetch() {
-  _graphQLFetch = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(query) {
+  _graphQLFetch = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(query) {
     var variables,
         response,
         body,
         result,
         error,
         details,
-        _args3 = arguments;
-    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        _args4 = arguments;
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
-        switch (_context3.prev = _context3.next) {
+        switch (_context4.prev = _context4.next) {
           case 0:
-            variables = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : {};
-            _context3.prev = 1;
-            _context3.next = 4;
+            variables = _args4.length > 1 && _args4[1] !== undefined ? _args4[1] : {};
+            _context4.prev = 1;
+            _context4.next = 4;
             return fetch('/graphql', {
               method: 'POST',
               headers: {
@@ -158,12 +199,12 @@ function _graphQLFetch() {
             });
 
           case 4:
-            response = _context3.sent;
-            _context3.next = 7;
+            response = _context4.sent;
+            _context4.next = 7;
             return response.text();
 
           case 7:
-            body = _context3.sent;
+            body = _context4.sent;
             result = JSON.parse(body, jsonDateReviver);
 
             if (result.errors) {
@@ -177,19 +218,19 @@ function _graphQLFetch() {
               }
             }
 
-            return _context3.abrupt("return", result.data);
+            return _context4.abrupt("return", result.data);
 
           case 13:
-            _context3.prev = 13;
-            _context3.t0 = _context3["catch"](1);
-            alert("Error in sending data to server: ".concat(_context3.t0.message));
+            _context4.prev = 13;
+            _context4.t0 = _context4["catch"](1);
+            alert("Error in sending data to server: ".concat(_context4.t0.message));
 
           case 16:
           case "end":
-            return _context3.stop();
+            return _context4.stop();
         }
       }
-    }, _callee3, null, [[1, 13]]);
+    }, _callee4, null, [[1, 13]]);
   }));
   return _graphQLFetch.apply(this, arguments);
 }
@@ -283,7 +324,7 @@ var IssueList = /*#__PURE__*/function (_React$Component3) {
         }, _callee2, this);
       }));
 
-      function createIssue(_x2) {
+      function createIssue(_x3) {
         return _createIssue.apply(this, arguments);
       }
 

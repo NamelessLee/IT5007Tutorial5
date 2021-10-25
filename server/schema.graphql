@@ -22,6 +22,14 @@ input IssueInputs {
   phoneNumber: String
 }
 
+input IssueDeletes {
+  id: Int!
+  serialNumber: String
+  name: String
+  phoneNumber: String
+  created: GraphQLDate!
+}
+
 ##### Top level declarations
 
 type Query {
@@ -32,4 +40,5 @@ type Query {
 type Mutation {
   setAboutMessage(message: String!): String
   issueAdd(issue: IssueInputs!): Issue!
+  issueDelete(issue: IssueDeletes!): Issue!
 }
