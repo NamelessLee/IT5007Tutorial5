@@ -18,8 +18,10 @@ async function removeIssue(issue){
 
 function handleRemove(issue, e) {
   e.preventDefault();
-  console.log("Delete:" + issue.id);
-  removeIssue(issue);
+  console.log("Delete:" + issue.serialNumber);
+  var sn = issue.serialNumber;
+  var newissue = {serialNumber: sn};
+  removeIssue(newissue);
 }
 
 function IssueRow(props) {
@@ -39,9 +41,13 @@ function IssueRow(props) {
 }
 
 function IssueTable(props) {
+  console.log("props:"+JSON.stringify(props));
+  console.log("props.issues:"+JSON.stringify(props.issues));
+  
   const issueRows = props.issues.map((issue,index) =>
     <IssueRow key={issue.id} issue={issue} index={index} />
   );
+  
 
   return (
     <table className="bordered-table" id="wltable">
@@ -77,7 +83,10 @@ class IssueAdd extends React.Component {
       return;
     }
     //console.log("size=" + document.getElementById("wltable").getElementsByTagName("tr").length);
-    var size = document.getElementById("wltable").getElementsByTagName("tr").length;
+    var size = 25;
+    if(document.getElementById("wltable").getElementsByTagName("tr")){
+      size = document.getElementById("wltable").getElementsByTagName("tr").length;
+    }
     if(size==25){
       alert("Waitlist is full");
       return;
@@ -174,21 +183,25 @@ class IssueList extends React.Component {
   }
 
   async loadData() {
+    console.log("qeury");
     const query = `query {
       Read {
         id serialNumber name phoneNumber
         created 
       }
     }`;
-
+    
     const data = await graphQLFetch(query);
+    var num = 0;
     if (data) {
-      this.setState({ issues: data.issueList });
+      this.setState({ issues: data.Read });//shit trying to find this bug for so long. unseccessful setState leads to props.issue = undefined
+      num = data.Read.length;
+      
     }
-    var num = data.issueList.length;
+    console.log("afterelse");
     console.log("num="+num);
     var newfs = 25-num;
-    this.setState({ fs: newfs });
+    //this.setState({ fs: newfs });
   }
 
   async createIssue(issue) {

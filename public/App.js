@@ -67,8 +67,12 @@ function _removeIssue() {
 
 function handleRemove(issue, e) {
   e.preventDefault();
-  console.log("Delete:" + issue.id);
-  removeIssue(issue);
+  console.log("Delete:" + issue.serialNumber);
+  var sn = issue.serialNumber;
+  var newissue = {
+    serialNumber: sn
+  };
+  removeIssue(newissue);
 }
 
 function IssueRow(props) {
@@ -83,6 +87,8 @@ function IssueRow(props) {
 }
 
 function IssueTable(props) {
+  console.log("props:" + JSON.stringify(props));
+  console.log("props.issues:" + JSON.stringify(props.issues));
   var issueRows = props.issues.map(function (issue, index) {
     return /*#__PURE__*/React.createElement(IssueRow, {
       key: issue.id,
@@ -123,7 +129,11 @@ var IssueAdd = /*#__PURE__*/function (_React$Component) {
       } //console.log("size=" + document.getElementById("wltable").getElementsByTagName("tr").length);
 
 
-      var size = document.getElementById("wltable").getElementsByTagName("tr").length;
+      var size = 25;
+
+      if (document.getElementById("wltable").getElementsByTagName("tr")) {
+        size = document.getElementById("wltable").getElementsByTagName("tr").length;
+      }
 
       if (size == 25) {
         alert("Waitlist is full");
@@ -318,27 +328,28 @@ var IssueList = /*#__PURE__*/function (_React$Component3) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                console.log("qeury");
                 query = "query {\n      Read {\n        id serialNumber name phoneNumber\n        created \n      }\n    }";
-                _context.next = 3;
+                _context.next = 4;
                 return graphQLFetch(query);
 
-              case 3:
+              case 4:
                 data = _context.sent;
+                num = 0;
 
                 if (data) {
                   this.setState({
-                    issues: data.issueList
-                  });
+                    issues: data.Read
+                  }); //shit trying to find this bug for so long. unseccessful setState leads to props.issue = undefined
+
+                  num = data.Read.length;
                 }
 
-                num = data.issueList.length;
+                console.log("afterelse");
                 console.log("num=" + num);
-                newfs = 25 - num;
-                this.setState({
-                  fs: newfs
-                });
+                newfs = 25 - num; //this.setState({ fs: newfs });
 
-              case 9:
+              case 10:
               case "end":
                 return _context.stop();
             }
