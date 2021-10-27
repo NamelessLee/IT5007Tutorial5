@@ -1,7 +1,50 @@
-# Pro MERN Stack - 2nd Edition
+How to run it:
 
-You are browsing the source code at the end of one of the sections in the book.
+npm install
+mongo issuetracker --eval "db.employees.remove({})"
+node scripts/trymongo.js
+mongo issuetracker scripts/init.mongo.js
+npx babel src --presets @babel/react --out-dir public
+npm start
 
-The project's README which contains the list of all chapters, sections
-their sources and other useful information can be found in the
-[master branch](https://github.com/vasansr/pro-mern-stack-2).
+GraphQL API:
+Add:
+
+mutation {
+  Add(issue:{
+		name:"Xinyue",
+        phoneNumber:"123456"
+  }) { 
+    _id
+    id
+    serialNumber
+    name
+    phoneNumber
+    created
+} }
+
+Read:
+
+query { Read{
+  _id
+    id
+  	serialNumber
+    name
+    phoneNumber
+    created
+} }
+
+Delete:
+
+mutation { Delete(issue:{
+  	serialNumber:"000001",
+}){
+  _id
+    id
+    name
+    phoneNumber
+    created
+}}
+
+
+SerialNumber is a unique number for every guest. Starting from 000001, 000002... You can change the serial number to specify which one you want to delete.
