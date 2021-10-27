@@ -35,7 +35,7 @@ function IssueRow(props) {
       <td>{issue.name}</td>
       <td>{issue.phoneNumber}</td>
       <td>{issue.created.toDateString()}</td>
-      <td><button onClick={(e) => handleRemove(issue, e)}>Remove</button></td>
+      <td><button onClick={(e) => handleRemove(issue, e)} style={{float:"right", backgroundColor: "rgb(238, 145, 142)", borderRadius: "5px"}}>Remove</button></td>
     </tr>
   );
 }
@@ -260,11 +260,6 @@ class IssueList extends React.Component {
         <div style={myWlStyle}>
           <IssueTable issues={this.state.issues} fs={this.state.fs}/>
         </div>
-        <span  style={{float:"left", margin: "0px 10px 10px 10px"}}>
-                    <button className={'button1'}>Hide Waitlist</button>
-                    <span>Total: </span>
-                    <span>4</span>
-            </span>
       </React.Fragment>
     );
   }

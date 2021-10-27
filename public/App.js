@@ -82,6 +82,11 @@ function IssueRow(props) {
   return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, index), /*#__PURE__*/React.createElement("td", null, issue.serialNumber), /*#__PURE__*/React.createElement("td", null, issue.name), /*#__PURE__*/React.createElement("td", null, issue.phoneNumber), /*#__PURE__*/React.createElement("td", null, issue.created.toDateString()), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("button", {
     onClick: function onClick(e) {
       return handleRemove(issue, e);
+    },
+    style: {
+      float: "right",
+      backgroundColor: "rgb(238, 145, 142)",
+      borderRadius: "5px"
     }
   }, "Remove")));
 }
@@ -450,14 +455,7 @@ var IssueList = /*#__PURE__*/function (_React$Component3) {
       }, /*#__PURE__*/React.createElement(IssueTable, {
         issues: this.state.issues,
         fs: this.state.fs
-      })), /*#__PURE__*/React.createElement("span", {
-        style: {
-          float: "left",
-          margin: "0px 10px 10px 10px"
-        }
-      }, /*#__PURE__*/React.createElement("button", {
-        className: 'button1'
-      }, "Hide Waitlist"), /*#__PURE__*/React.createElement("span", null, "Total: "), /*#__PURE__*/React.createElement("span", null, "4")));
+      })));
     }
   }]);
 
