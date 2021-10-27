@@ -30,7 +30,7 @@ input IssueDeletes {
 
 type Query {
   about: String!
-  issueList: [Issue!]!
+  Read: [Issue!]!
 }
 
 type Mutation {

@@ -175,7 +175,7 @@ class IssueList extends React.Component {
 
   async loadData() {
     const query = `query {
-      issueList {
+      Read {
         id serialNumber name phoneNumber
         created 
       }

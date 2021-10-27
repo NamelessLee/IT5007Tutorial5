@@ -318,7 +318,7 @@ var IssueList = /*#__PURE__*/function (_React$Component3) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                query = "query {\n      issueList {\n        id serialNumber name phoneNumber\n        created \n      }\n    }";
+                query = "query {\n      Read {\n        id serialNumber name phoneNumber\n        created \n      }\n    }";
                 _context.next = 3;
                 return graphQLFetch(query);
 
