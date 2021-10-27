@@ -45,7 +45,7 @@ function _removeIssue() {
         switch (_context3.prev = _context3.next) {
           case 0:
             console.log("I'm removeIssue");
-            query = "mutation issueDelete($issue: IssueDeletes!){\n    issueDelete(issue: $issue) {\n      id\n    }\n  }";
+            query = "mutation Delete($issue: IssueDeletes!){\n    Delete(issue: $issue) {\n      id\n    }\n  }";
             _context3.next = 4;
             return graphQLFetch(query, {
               issue: issue

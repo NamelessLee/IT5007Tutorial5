@@ -7,8 +7,8 @@ function jsonDateReviver(key, value) {
 
 async function removeIssue(issue){
   console.log("I'm removeIssue");
-  const query = `mutation issueDelete($issue: IssueDeletes!){
-    issueDelete(issue: $issue) {
+  const query = `mutation Delete($issue: IssueDeletes!){
+    Delete(issue: $issue) {
       id
     }
   }`;

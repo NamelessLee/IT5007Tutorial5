@@ -43,7 +43,7 @@ const resolvers = {
   Mutation: {
     setAboutMessage,
     Add,
-    issueDelete,
+    Delete,
   },
   GraphQLDate,
 };
@@ -82,9 +82,9 @@ function issueValidate(issue) {
   }
 }
 
-async function issueDelete(_, { issue }) {
+async function Delete(_, { issue }) {
   let serialNumber = issue.serialNumber;
-  console.log("I'm issueDelete");
+  console.log("I'm Delete");
   const savedIssue = await db.collection('issues')
     .findOne({ serialNumber: serialNumber});
   const result = await db.collection('issues').deleteOne(issue);
