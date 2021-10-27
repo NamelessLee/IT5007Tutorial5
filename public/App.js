@@ -94,7 +94,9 @@ function handleRemove(issue, e) {
 
 function IssueRow(props) {
   var issue = props.issue;
-  return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, issue.id), /*#__PURE__*/React.createElement("td", null, issue.serialNumber), /*#__PURE__*/React.createElement("td", null, issue.name), /*#__PURE__*/React.createElement("td", null, issue.phoneNumber), /*#__PURE__*/React.createElement("td", null, issue.created.toDateString()), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("button", {
+  var index = props.index;
+  index++;
+  return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, index), /*#__PURE__*/React.createElement("td", null, issue.serialNumber), /*#__PURE__*/React.createElement("td", null, issue.name), /*#__PURE__*/React.createElement("td", null, issue.phoneNumber), /*#__PURE__*/React.createElement("td", null, issue.created.toDateString()), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("button", {
     onClick: function onClick(e) {
       return handleRemove(issue, e);
     }
@@ -102,15 +104,17 @@ function IssueRow(props) {
 }
 
 function IssueTable(props) {
-  var issueRows = props.issues.map(function (issue) {
+  var issueRows = props.issues.map(function (issue, index) {
     return /*#__PURE__*/React.createElement(IssueRow, {
       key: issue.id,
-      issue: issue
+      issue: issue,
+      index: index
     });
   });
   return /*#__PURE__*/React.createElement("table", {
-    className: "bordered-table"
-  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "ID"), /*#__PURE__*/React.createElement("th", null, "Serial Number"), /*#__PURE__*/React.createElement("th", null, "Name"), /*#__PURE__*/React.createElement("th", null, "Phone Number"), /*#__PURE__*/React.createElement("th", null, "Created"), /*#__PURE__*/React.createElement("th", null, "Remove"))), /*#__PURE__*/React.createElement("tbody", null, issueRows));
+    className: "bordered-table",
+    id: "wltable"
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "No."), /*#__PURE__*/React.createElement("th", null, "Serial Number"), /*#__PURE__*/React.createElement("th", null, "Name"), /*#__PURE__*/React.createElement("th", null, "Phone Number"), /*#__PURE__*/React.createElement("th", null, "Created"), /*#__PURE__*/React.createElement("th", null, "Remove"))), /*#__PURE__*/React.createElement("tbody", null, issueRows));
 }
 
 var IssueAdd = /*#__PURE__*/function (_React$Component2) {
@@ -133,6 +137,20 @@ var IssueAdd = /*#__PURE__*/function (_React$Component2) {
     value: function handleSubmit(e) {
       e.preventDefault();
       var form = document.forms.issueAdd;
+
+      if (form.name.value == "" || form.phoneNumber.value == "") {
+        alert("Invalid input. Please enter content");
+        return;
+      } //console.log("size=" + document.getElementById("wltable").getElementsByTagName("tr").length);
+
+
+      var size = document.getElementById("wltable").getElementsByTagName("tr").length;
+
+      if (size == 25) {
+        alert("Waitlist is full");
+        return;
+      }
+
       var issue = {
         name: form.name.value,
         phoneNumber: form.phoneNumber.value
@@ -140,6 +158,7 @@ var IssueAdd = /*#__PURE__*/function (_React$Component2) {
       this.props.createIssue(issue);
       form.name.value = "";
       form.phoneNumber.value = "";
+      this.props.decfs();
     }
   }, {
     key: "render",
@@ -249,9 +268,11 @@ var IssueList = /*#__PURE__*/function (_React$Component3) {
     _this2 = _super3.call(this);
     _this2.state = {
       issues: [],
-      flag: 1
+      fs: 25
     };
     _this2.createIssue = _this2.createIssue.bind(_assertThisInitialized(_this2));
+    _this2.incfs = _this2.incfs.bind(_assertThisInitialized(_this2));
+    _this2.decfs = _this2.decfs.bind(_assertThisInitialized(_this2));
     return _this2;
   }
 
@@ -264,7 +285,7 @@ var IssueList = /*#__PURE__*/function (_React$Component3) {
     key: "loadData",
     value: function () {
       var _loadData = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var query, data;
+        var query, data, num, newfs;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -282,7 +303,14 @@ var IssueList = /*#__PURE__*/function (_React$Component3) {
                   });
                 }
 
-              case 5:
+                num = data.issueList.length;
+                console.log("num=" + num);
+                newfs = 25 - num;
+                this.setState({
+                  fs: newfs
+                });
+
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -333,12 +361,34 @@ var IssueList = /*#__PURE__*/function (_React$Component3) {
       return createIssue;
     }()
   }, {
+    key: "incfs",
+    value: function incfs() {
+      console.log("incfs");
+      var newfs = this.state.fs;
+      newfs++;
+      this.setState({
+        fs: newfs
+      });
+    }
+  }, {
+    key: "decfs",
+    value: function decfs() {
+      var newfs = this.state.fs;
+      newfs--;
+      this.setState({
+        fs: newfs
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", null, "California Hotel"), /*#__PURE__*/React.createElement(IssueFilter, null), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement(IssueTable, {
-        issues: this.state.issues
+      return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", null, "California Hotel"), /*#__PURE__*/React.createElement("h3", null, "Free slots: ", this.state.fs), /*#__PURE__*/React.createElement(IssueFilter, null), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement(IssueTable, {
+        issues: this.state.issues,
+        fs: this.state.fs
       }), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement(IssueAdd, {
-        createIssue: this.createIssue
+        createIssue: this.createIssue,
+        incfs: this.incfs,
+        decfs: this.decfs
       }));
     }
   }]);

@@ -32,9 +32,11 @@ function handleRemove(issue, e) {
 
 function IssueRow(props) {
   const issue = props.issue;
+  var index = props.index;
+  index++;
   return (
     <tr>
-      <td>{issue.id}</td>
+      <td>{index}</td>
       <td>{issue.serialNumber}</td>
       <td>{issue.name}</td>
       <td>{issue.phoneNumber}</td>
@@ -45,15 +47,15 @@ function IssueRow(props) {
 }
 
 function IssueTable(props) {
-  const issueRows = props.issues.map(issue =>
-    <IssueRow key={issue.id} issue={issue} />
+  const issueRows = props.issues.map((issue,index) =>
+    <IssueRow key={issue.id} issue={issue} index={index} />
   );
 
   return (
-    <table className="bordered-table">
+    <table className="bordered-table" id="wltable">
       <thead>
         <tr>
-          <th>ID</th>
+          <th>No.</th>
           <th>Serial Number</th>
           <th>Name</th>
           <th>Phone Number</th>
@@ -72,17 +74,29 @@ class IssueAdd extends React.Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
+    
   }
 
   handleSubmit(e) {
     e.preventDefault();
     const form = document.forms.issueAdd;
+    if(form.name.value==""||form.phoneNumber.value == ""){
+      alert("Invalid input. Please enter content");
+      return;
+    }
+    //console.log("size=" + document.getElementById("wltable").getElementsByTagName("tr").length);
+    var size = document.getElementById("wltable").getElementsByTagName("tr").length;
+    if(size==25){
+      alert("Waitlist is full");
+      return;
+    }
     const issue = {
       name: form.name.value,
       phoneNumber: form.phoneNumber.value
     }
     this.props.createIssue(issue);
     form.name.value = ""; form.phoneNumber.value = "";
+    this.props.decfs();
   }
 
   render() {
@@ -128,8 +142,10 @@ async function graphQLFetch(query, variables = {}) {
 class IssueList extends React.Component {
   constructor() {
     super();
-    this.state = { issues: [], flag: 1 };
+    this.state = { issues: [], fs: 25};
     this.createIssue = this.createIssue.bind(this);
+    this.incfs = this.incfs.bind(this);
+    this.decfs = this.decfs.bind(this);
   }
 
   componentDidMount() {
@@ -148,6 +164,10 @@ class IssueList extends React.Component {
     if (data) {
       this.setState({ issues: data.issueList });
     }
+    var num = data.issueList.length;
+    console.log("num="+num);
+    var newfs = 25-num;
+    this.setState({ fs: newfs });
   }
 
   async createIssue(issue) {
@@ -163,15 +183,29 @@ class IssueList extends React.Component {
     }
   }
 
+  incfs() {
+    console.log("incfs");
+    var newfs = this.state.fs;
+    newfs++;
+    this.setState({fs: newfs});
+  }
+
+  decfs() {
+    var newfs = this.state.fs;
+    newfs--;
+    this.setState({fs: newfs});
+  }
+
   render() {
     return (
       <React.Fragment>
         <h1>California Hotel</h1>
+        <h3>Free slots: {this.state.fs}</h3>
         <IssueFilter />
         <hr />
-        <IssueTable issues={this.state.issues} />
+        <IssueTable issues={this.state.issues} fs={this.state.fs}/>
         <hr />
-        <IssueAdd createIssue={this.createIssue} />
+        <IssueAdd createIssue={this.createIssue} incfs={this.incfs} decfs={this.decfs}/>
       </React.Fragment>
     );
   }
