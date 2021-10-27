@@ -1,0 +1,94 @@
+body {
+    background-color: rgb(223, 240, 255);
+}
+.block{
+    width: 400px;
+    display: block;
+    margin:5px 0;
+}
+label {
+    display: inline-block;
+    width: 120px;
+    text-align: right;
+}
+.button {
+    background-color: peachpuff;
+    border: 2px solid indianred;
+    border-radius: 10px ;
+    padding: 15px 32px;
+    font-size: 20px;
+    margin: 4px 2px;
+    box-shadow: 0 9px gray;
+    cursor: pointer;
+}
+.button:hover {
+    background-color:gold;
+}
+.button:active {
+    background-color: gold;
+    box-shadow: 0 5px gray;
+    transform: translateY(4px);
+}
+input[type=text] {
+    border-radius: 8px;
+    padding: 8px;
+    border: 1.5px solid;
+    color:darkred;
+}
+input[type=submit] {
+    background-color:rgb(121, 255, 221);
+    border: 2px solid rgb(0, 102, 80);
+    border-radius: 10px ;
+    padding: 8px 15px;
+    font-size: 13px;
+    margin: 4px 2px;
+    box-shadow: 0 3px gray;
+    cursor: pointer;
+}
+input[type=reset] {
+    background-color:rgb(199, 199, 199);
+    border: 2px solid rgb(0, 102, 80);
+    border-radius: 10px ;
+    padding: 8px 15px;
+    font-size: 13px;
+    margin: 4px 2px;
+    box-shadow: 0 3px gray;
+    cursor: pointer;
+}
+input[type=submit]:hover {
+    background-color:rgb(0, 255, 200);
+}
+input[type=reset]:hover {
+    background-color:rgb(122, 122, 122);
+}
+input[type=submit]:active {
+    background-color: gold;
+    box-shadow: 0 3px gray;
+    transform: translateY(4px);
+}
+input[type=reset]:active {
+    background-color: gold;
+    box-shadow: 0 3px gray;
+    transform: translateY(2px);
+}
+.button1 {
+    background-color:paleturquoise;
+    border: 2px solid rgb(10, 122, 122);
+    border-radius: 10px ;
+    padding: 15px 32px;
+    font-size: 20px;
+    margin: 4px 2px;
+    box-shadow: 0 9px rgb(4, 98, 136);
+    color:rgb(22, 46, 46);
+    cursor: pointer;
+}
+.button1:hover {
+    background-color:aqua;
+}
+.button1:active {
+    background-color: gold;
+    box-shadow: 0 5px gray;
+    transform: translateY(4px);
+}
+            
+        

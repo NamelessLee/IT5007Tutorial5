@@ -23,11 +23,7 @@ input IssueInputs {
 }
 
 input IssueDeletes {
-  id: Int!
-  serialNumber: String
-  name: String
-  phoneNumber: String
-  created: GraphQLDate!
+  serialNumber: String!
 }
 
 ##### Top level declarations
@@ -39,6 +35,6 @@ type Query {
 
 type Mutation {
   setAboutMessage(message: String!): String
-  issueAdd(issue: IssueInputs!): Issue!
+  Add(issue: IssueInputs!): Issue!
   issueDelete(issue: IssueDeletes!): Issue!
 }

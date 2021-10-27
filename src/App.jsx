@@ -5,14 +5,6 @@ function jsonDateReviver(key, value) {
   return value;
 }
 
-class IssueFilter extends React.Component {
-  render() {
-    return (
-      <div>This is a placeholder for the issue filter.</div>
-    );
-  }
-}
-
 async function removeIssue(issue){
   console.log("I'm removeIssue");
   const query = `mutation issueDelete($issue: IssueDeletes!){
@@ -100,16 +92,28 @@ class IssueAdd extends React.Component {
   }
 
   render() {
+    const myAddStyle = {
+      width: "300px", 
+      float:"left", 
+      padding: "0.5px 10px 10px 20px", 
+      backgroundColor: "bisque",
+      borderRadius: "10px"
+    }
     return (
-      <form name="issueAdd" onSubmit={this.handleSubmit}>
-        <label for="name" >Name:</label>
-        <input type="text" id="name" name="name" placeholder="Name" />
-        <br></br>
-        <label for="phoneNumber" >Phone Number:</label>
-        <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Phone Number" />
-        <br></br>
-        <button>Add</button>
-      </form>
+      <div style={myAddStyle}>
+        <form name="issueAdd" onSubmit={this.handleSubmit}>
+          <label for="name" >Name:</label>
+          <input type="text" id="name" name="name" placeholder="Name" />
+          <br></br>
+          <label for="phoneNumber" >Phone Number:</label>
+          <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Phone Number" />
+          <div className={'block'} style={{textAlign: "center"}}>
+            <input type="submit" value="submit"></input>
+            <input type="reset" value="reset"></input>
+          </div>
+        </form>
+      </div>
+      
     );
   }
 }
@@ -136,6 +140,23 @@ async function graphQLFetch(query, variables = {}) {
     return result.data;
   } catch (e) {
     alert(`Error in sending data to server: ${e.message}`);
+  }
+}
+
+class MyHeader extends React.Component {
+  render() {
+      const myHeaderStyle = {
+          backgroundColor: "mistyrose",
+          textAlign: "center",
+          color: "saddlebrown"
+      };
+      return (
+          <div id="header2" style={myHeaderStyle}>
+              <span>
+                  <h1>🏨 Home Page 🍽️ </h1>
+              </span>
+          </div>
+      )
   }
 }
 
@@ -171,8 +192,8 @@ class IssueList extends React.Component {
   }
 
   async createIssue(issue) {
-    const query = `mutation issueAdd($issue: IssueInputs!) {
-      issueAdd(issue: $issue) {
+    const query = `mutation Add($issue: IssueInputs!) {
+      Add(issue: $issue) {
         id
       }
     }`;
@@ -197,15 +218,40 @@ class IssueList extends React.Component {
   }
 
   render() {
+    const myFreeSlotsStyle = {
+      width: "150px", 
+      float:"right", 
+      backgroundColor: "gold", 
+      borderRadius: "10px", 
+      fontSize: "large", 
+      padding: "10px 25px", 
+      color:"maroon"
+  }
+  const myWlStyle = {
+    width: "480px",
+    float: "left",
+    backgroundColor: "rgb(215, 191, 216)",
+    borderRadius: "10px", 
+    padding: "5px 20px 20px 20px", 
+    textAlign: "center", 
+    border:"2px solid rgb(112, 56, 79)"
+}
     return (
       <React.Fragment>
-        <h1>California Hotel</h1>
-        <h3>Free slots: {this.state.fs}</h3>
-        <IssueFilter />
-        <hr />
-        <IssueTable issues={this.state.issues} fs={this.state.fs}/>
-        <hr />
+        <MyHeader />
+        <div style={myFreeSlotsStyle}>
+          <h3>Free slots: {this.state.fs}</h3>
+        </div>
+        
         <IssueAdd createIssue={this.createIssue} incfs={this.incfs} decfs={this.decfs}/>
+        <div style={myWlStyle}>
+          <IssueTable issues={this.state.issues} fs={this.state.fs}/>
+        </div>
+        <span  style={{float:"left", margin: "0px 10px 10px 10px"}}>
+                    <button className={'button1'}>Hide Waitlist</button>
+                    <span>Total: </span>
+                    <span>4</span>
+            </span>
       </React.Fragment>
     );
   }

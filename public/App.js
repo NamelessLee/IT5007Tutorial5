@@ -2,10 +2,6 @@
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -26,33 +22,16 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 var dateRegex = new RegExp('^\\d\\d\\d\\d-\\d\\d-\\d\\d');
 
 function jsonDateReviver(key, value) {
   if (dateRegex.test(value)) return new Date(value);
   return value;
 }
-
-var IssueFilter = /*#__PURE__*/function (_React$Component) {
-  _inherits(IssueFilter, _React$Component);
-
-  var _super = _createSuper(IssueFilter);
-
-  function IssueFilter() {
-    _classCallCheck(this, IssueFilter);
-
-    return _super.apply(this, arguments);
-  }
-
-  _createClass(IssueFilter, [{
-    key: "render",
-    value: function render() {
-      return /*#__PURE__*/React.createElement("div", null, "This is a placeholder for the issue filter.");
-    }
-  }]);
-
-  return IssueFilter;
-}(React.Component);
 
 function removeIssue(_x) {
   return _removeIssue.apply(this, arguments);
@@ -117,17 +96,17 @@ function IssueTable(props) {
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "No."), /*#__PURE__*/React.createElement("th", null, "Serial Number"), /*#__PURE__*/React.createElement("th", null, "Name"), /*#__PURE__*/React.createElement("th", null, "Phone Number"), /*#__PURE__*/React.createElement("th", null, "Created"), /*#__PURE__*/React.createElement("th", null, "Remove"))), /*#__PURE__*/React.createElement("tbody", null, issueRows));
 }
 
-var IssueAdd = /*#__PURE__*/function (_React$Component2) {
-  _inherits(IssueAdd, _React$Component2);
+var IssueAdd = /*#__PURE__*/function (_React$Component) {
+  _inherits(IssueAdd, _React$Component);
 
-  var _super2 = _createSuper(IssueAdd);
+  var _super = _createSuper(IssueAdd);
 
   function IssueAdd() {
     var _this;
 
     _classCallCheck(this, IssueAdd);
 
-    _this = _super2.call(this);
+    _this = _super.call(this);
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -163,7 +142,16 @@ var IssueAdd = /*#__PURE__*/function (_React$Component2) {
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/React.createElement("form", {
+      var myAddStyle = {
+        width: "300px",
+        float: "left",
+        padding: "0.5px 10px 10px 20px",
+        backgroundColor: "bisque",
+        borderRadius: "10px"
+      };
+      return /*#__PURE__*/React.createElement("div", {
+        style: myAddStyle
+      }, /*#__PURE__*/React.createElement("form", {
         name: "issueAdd",
         onSubmit: this.handleSubmit
       }, /*#__PURE__*/React.createElement("label", {
@@ -180,7 +168,18 @@ var IssueAdd = /*#__PURE__*/function (_React$Component2) {
         id: "phoneNumber",
         name: "phoneNumber",
         placeholder: "Phone Number"
-      }), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("button", null, "Add"));
+      }), /*#__PURE__*/React.createElement("div", {
+        className: 'block',
+        style: {
+          textAlign: "center"
+        }
+      }, /*#__PURE__*/React.createElement("input", {
+        type: "submit",
+        value: "submit"
+      }), /*#__PURE__*/React.createElement("input", {
+        type: "reset",
+        value: "reset"
+      }))));
     }
   }]);
 
@@ -254,6 +253,35 @@ function _graphQLFetch() {
   }));
   return _graphQLFetch.apply(this, arguments);
 }
+
+var MyHeader = /*#__PURE__*/function (_React$Component2) {
+  _inherits(MyHeader, _React$Component2);
+
+  var _super2 = _createSuper(MyHeader);
+
+  function MyHeader() {
+    _classCallCheck(this, MyHeader);
+
+    return _super2.apply(this, arguments);
+  }
+
+  _createClass(MyHeader, [{
+    key: "render",
+    value: function render() {
+      var myHeaderStyle = {
+        backgroundColor: "mistyrose",
+        textAlign: "center",
+        color: "saddlebrown"
+      };
+      return /*#__PURE__*/React.createElement("div", {
+        id: "header2",
+        style: myHeaderStyle
+      }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("h1", null, "\uD83C\uDFE8 Home Page \uD83C\uDF7D\uFE0F ")));
+    }
+  }]);
+
+  return MyHeader;
+}(React.Component);
 
 var IssueList = /*#__PURE__*/function (_React$Component3) {
   _inherits(IssueList, _React$Component3);
@@ -333,7 +361,7 @@ var IssueList = /*#__PURE__*/function (_React$Component3) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                query = "mutation issueAdd($issue: IssueInputs!) {\n      issueAdd(issue: $issue) {\n        id\n      }\n    }";
+                query = "mutation Add($issue: IssueInputs!) {\n      Add(issue: $issue) {\n        id\n      }\n    }";
                 _context2.next = 3;
                 return graphQLFetch(query, {
                   issue: issue
@@ -382,14 +410,43 @@ var IssueList = /*#__PURE__*/function (_React$Component3) {
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", null, "California Hotel"), /*#__PURE__*/React.createElement("h3", null, "Free slots: ", this.state.fs), /*#__PURE__*/React.createElement(IssueFilter, null), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement(IssueTable, {
-        issues: this.state.issues,
-        fs: this.state.fs
-      }), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement(IssueAdd, {
+      var myFreeSlotsStyle = {
+        width: "150px",
+        float: "right",
+        backgroundColor: "gold",
+        borderRadius: "10px",
+        fontSize: "large",
+        padding: "10px 25px",
+        color: "maroon"
+      };
+      var myWlStyle = {
+        width: "480px",
+        float: "left",
+        backgroundColor: "rgb(215, 191, 216)",
+        borderRadius: "10px",
+        padding: "5px 20px 20px 20px",
+        textAlign: "center",
+        border: "2px solid rgb(112, 56, 79)"
+      };
+      return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(MyHeader, null), /*#__PURE__*/React.createElement("div", {
+        style: myFreeSlotsStyle
+      }, /*#__PURE__*/React.createElement("h3", null, "Free slots: ", this.state.fs)), /*#__PURE__*/React.createElement(IssueAdd, {
         createIssue: this.createIssue,
         incfs: this.incfs,
         decfs: this.decfs
-      }));
+      }), /*#__PURE__*/React.createElement("div", {
+        style: myWlStyle
+      }, /*#__PURE__*/React.createElement(IssueTable, {
+        issues: this.state.issues,
+        fs: this.state.fs
+      })), /*#__PURE__*/React.createElement("span", {
+        style: {
+          float: "left",
+          margin: "0px 10px 10px 10px"
+        }
+      }, /*#__PURE__*/React.createElement("button", {
+        className: 'button1'
+      }, "Hide Waitlist"), /*#__PURE__*/React.createElement("span", null, "Total: "), /*#__PURE__*/React.createElement("span", null, "4")));
     }
   }]);
 
